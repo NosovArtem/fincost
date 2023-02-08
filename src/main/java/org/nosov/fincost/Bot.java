@@ -10,7 +10,6 @@ import com.pengrad.telegrambot.request.SendMessage;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Bot {
     private final TelegramBot bot = new TelegramBot(System.getenv("FIN_BOT_TOKEN"));
@@ -42,7 +41,7 @@ public class Bot {
     }
 
     private BaseRequest process(Message message) {
-        BaseRequest request;
+        BaseRequest request = null;
         if (message.text().startsWith("/start")) {
             request = new SendMessage(message.chat().id(), "Используйте такой формат");
         } else if (message.text().startsWith("/add")) {
@@ -53,6 +52,8 @@ public class Bot {
             StringBuilder stringBuilder = new StringBuilder();
             list.forEach(row -> stringBuilder.append(Arrays.toString(row)).append("</br>"));
             request = new SendMessage(message.chat().id(), stringBuilder.toString());
+        } else if (message.text().startsWith("/exit")) {
+            System.exit(0);
         } else {
             request = new SendMessage(message.chat().id(), "Не известная команда");
         }
