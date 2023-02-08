@@ -22,8 +22,17 @@ public class Bot {
 
     public void serve() {
         bot.setUpdatesListener(updates -> {
-            updates.forEach(this::process);
+            updates.forEach(this::process); // process updates
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
+        }, e -> {
+            if (e.response() != null) {
+                // god bad response from telegram
+                e.response().errorCode();
+                e.response().description();
+            } else {
+                // probably network error
+                e.printStackTrace();
+            }
         });
     }
 
