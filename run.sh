@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 export FIN_BOT_TOKEN=
 echo Starting...
